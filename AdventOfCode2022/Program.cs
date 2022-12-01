@@ -18,4 +18,4 @@ foreach (string line in System.IO.File.ReadLines("input.txt"))
 }
 
 var highestCalories = elves.Max(t=> t.TotalCalories);
-Console.WriteLine($"Elf with highest calories was {highestCalories}");
+Console.WriteLine($"Elf with highest calories has {highestCalories} calories");

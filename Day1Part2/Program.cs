@@ -19,4 +19,4 @@ foreach (string line in System.IO.File.ReadLines("input.txt"))
 
 var elvesSorted = elves.OrderByDescending(x=>x.TotalCalories).ToList();
 int highestCaloriesTop3 = elvesSorted[0].TotalCalories + elvesSorted[1].TotalCalories + elvesSorted[2].TotalCalories;
-Console.WriteLine($"Top 3 elves hold {highestCaloriesTop3}");
+Console.WriteLine($"Top 3 elves hold {highestCaloriesTop3} calories");
