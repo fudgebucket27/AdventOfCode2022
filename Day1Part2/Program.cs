@@ -1,4 +1,4 @@
-﻿using Day1;
+﻿using Day1Part2;
 
 List<Elf> elves = new List<Elf>();
 Elf elf = new Elf();

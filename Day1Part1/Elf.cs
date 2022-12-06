@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Day1
+namespace Day1Part1
 {
     public class Elf
     {
