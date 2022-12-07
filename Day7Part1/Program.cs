@@ -12,7 +12,14 @@ foreach(string line in input)
     {
         if(command[1] == "cd" && command[2] != "..")
         {
-            currentDirectory += command[2] + ",";
+            if(command[2] != "/")
+            {
+                currentDirectory += command[2] + "/";
+            }
+            else
+            {
+                currentDirectory += command[2];
+            }
 
             if (!directories.Where(x=> x.Path == currentDirectory).Any())
             {
@@ -25,6 +32,7 @@ foreach(string line in input)
         else if (command[1] == "cd" && command[2] == "..")
         {
             currentDirectory = String.Concat(currentDirectory.Split('/').Take(currentDirectory.Split('/').Length - 1).ToArray());
+            currentDirectory = "/" + currentDirectory;
             currentCommand = "cd";
         }
         else if(command[1] == "ls")
