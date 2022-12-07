@@ -2,7 +2,7 @@
 
 string[] input = System.IO.File.ReadAllLines("input.txt");
 
-List<Folder> directory = new List<Folder>();
+List<Folder> directories = new List<Folder>();
 string currentDirectory = "";
 var currentCommand = "";
 foreach(string line in input)
@@ -12,12 +12,13 @@ foreach(string line in input)
     {
         if(command[1] == "cd" && command[2] != "..")
         {
-            currentDirectory += "/" + command[2] ;
-            if(!directory.Where(x=> x.Path == currentDirectory).Any())
+            currentDirectory += command[2] + ",";
+
+            if (!directories.Where(x=> x.Path == currentDirectory).Any())
             {
                 Folder folder = new Folder();
                 folder.Path = currentDirectory;
-                directory.Add(folder);
+                directories.Add(folder);
             }
             currentCommand = "cd";
         }
@@ -41,12 +42,35 @@ foreach(string line in input)
             Day7Part1.File file = new Day7Part1.File();
             file.Name = fileName;
             file.Size= fileSize;
-            if(directory.Where(x=> x.Path == currentDirectory && x.Files.Where(x=>x.Name==fileName).Any()).Any() == false)
+            if(directories.Where(x=> x.Path == currentDirectory && x.Files.Where(x=>x.Name==fileName).Any()).Any() == false)
             {
-                directory.First(x => x.Path == currentDirectory).Files.Add(file);
+                directories.First(x => x.Path == currentDirectory).Files.Add(file);
             }
         }
     }
 }
-var totalSize = directory.Sum(x=> x.Files.Sum(x=> x.Size));
-Console.WriteLine(totalSize);
+long totalDirectorySize = 0;
+directories.OrderBy(x => x.Path);
+foreach(var directory in directories)
+{
+    long currentDirectorySize = 0;
+    foreach(var file in directory.Files)
+    {
+        currentDirectorySize += file.Size;
+    }
+    var subDirectories = directories.Where(x => x.Path.StartsWith(directory.Path + "/"));
+    Console.WriteLine($"Directory {directory.Path}, Sub count: {subDirectories.Count()}");
+    foreach(var subDirectory in subDirectories)
+    {
+        foreach (var file in subDirectory.Files)
+        {
+            currentDirectorySize += file.Size;
+        }
+    }
+
+    if(currentDirectorySize <= 100000)
+    {
+        totalDirectorySize += currentDirectorySize;
+    }
+}
+Console.WriteLine(totalDirectorySize);
